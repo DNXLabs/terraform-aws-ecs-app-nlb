@@ -53,6 +53,7 @@ variable "hostname_create" {
   description = "Optional parameter to create or not a Route53 record"
 }
 variable "hostname" {
+  default     = ""
   description = "Hostname to create DNS record for this app"
 }
 variable "autoscaling_cpu" {
