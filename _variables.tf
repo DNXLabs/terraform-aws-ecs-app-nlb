@@ -44,7 +44,10 @@ variable "port" {
   default     = "80"
   description = "Port for target group to listen"
 }
-
+variable "container_port" {
+  default     = "8080"
+  description = "Port your container listens (used in the placeholder task definition)"
+}
 variable "hostname_create" {
   default     = "true"
   description = "Optional parameter to create or not a Route53 record"
