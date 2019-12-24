@@ -52,6 +52,10 @@ variable "hostname_create" {
   default     = "true"
   description = "Optional parameter to create or not a Route53 record"
 }
+variable "hosted_zone" {
+  default     = ""
+  description = "Hosted Zone to create DNS record for this app"
+}
 variable "hostname" {
   default     = ""
   description = "Hostname to create DNS record for this app"
