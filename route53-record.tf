@@ -13,5 +13,6 @@ resource "aws_route53_record" "hostname" {
   name    = var.hostname
   type    = "CNAME"
   ttl     = "300"
-  records = list(data.nlb_selected.dns_name)
+  records = list(data.aws_lb.nlb_selected.dns_name)
+
 }
