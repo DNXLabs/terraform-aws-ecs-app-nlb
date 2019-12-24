@@ -84,3 +84,7 @@ variable "autoscaling_scale_out_cooldown" {
   default     = 300
   description = "Cooldown in seconds to wait between scale out events"
 }
+variable "service_health_check_grace_period_seconds" {
+  default     = 0
+  description = "Time until your container starts serving requests"
+}
