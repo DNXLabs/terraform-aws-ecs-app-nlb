@@ -9,7 +9,7 @@ resource "aws_lb_listener" "ecs_tcp" {
   }
 }
 resource "aws_lb_target_group" "ecs_default_tcp" {
-  name     = "ecs-${local.workspace["cluster_name"]}-${local.workspace["name"]}-tcp"
+  name     = "ecs-${var.cluster_name}-${var.name}-tcp"
   port     = var.port
   protocol = "TCP"
   vpc_id   = var.vpc_id
