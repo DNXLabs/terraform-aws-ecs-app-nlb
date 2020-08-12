@@ -20,7 +20,8 @@ This modules creates the following resources:
     - You can specify the nin number of containers to scale with autoscaling. The default is 1 
     - Cooldown in seconds to wait between scale in events. The default is 300
     - Cooldown in seconds to wait between scale out events. The default is 300  
- - Cloudwatch Log Groups   
+ - Cloudwatch Log Groups 
+ - Network Load Balancer  
  - ECS task definition - A task definition is required to run Docker containers in Amazon ECS. Some of the parameters you can specify in a task definition include:
       - Image - Docker image to deploy 
            - Default value = "dnxsolutions/nginx-hello:latest"
@@ -34,17 +35,11 @@ This modules creates the following resources:
  - ECS Task-scheduler activated by cloudwatch events
 
 In addition you have the option to create or not :
- - Application Load Balancer (ALB)
-     - alb - An external ALB
-     - alb_internal - A second internal ALB for private APIs
-     - alb_only - Deploy only an Application Load Balancer and no cloudFront or not with the cluster
  - Autoscaling
      - Enables or not autoscaling based on average CPU tracking 
      - Target average CPU percentage to track for autoscaling 
- - Codedeploy
-     -  Time in minutes to route the traffic to the new application deployment
-     -  Time in minutes to terminate the new deployment
-     
+ - A Hostname to create DNS record for this app
+
 [![Lint Status](https://github.com/DNXLabs/terraform-aws-ecs-app-nlb/workflows/Lint/badge.svg)](https://github.com/DNXLabs/terraform-aws-ecs-app-nlb/actions)
 [![LICENSE](https://img.shields.io/github/license/DNXLabs/terraform-aws-ecs-app-nlb)](https://github.com/DNXLabs/terraform-aws-ecs-app-nlb/blob/master/LICENSE)
 
