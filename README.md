@@ -1,6 +1,6 @@
 # terraform-aws-ecs-app-nlb
 
-Terraform-aws-ecs-app-nlb is an AWS ECS Application Module for Networking LoadBalance Application setup on ECS
+Terraform-aws-ecs-app-nlb is an AWS ECS Application Module that creates a Networking LoadBalance Application setup on ECS
 
 This module is designed to be used with `DNXLabs/terraform-aws-ecs` (https://github.com/DNXLabs/terraform-aws-ecs).
 
@@ -21,7 +21,7 @@ This modules creates the following resources:
     - Cooldown in seconds to wait between scale in events. The default is 300
     - Cooldown in seconds to wait between scale out events. The default is 300  
  - Cloudwatch Log Groups 
- - Network Load Balancer  
+ - Network Load Balancer (NLB) 
  - ECS task definition - A task definition is required to run Docker containers in Amazon ECS. Some of the parameters you can specify in a task definition include:
       - Image - Docker image to deploy 
            - Default value = "dnxsolutions/nginx-hello:latest"
