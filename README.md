@@ -3,11 +3,11 @@
 [![Lint Status](https://github.com/DNXLabs/terraform-aws-ecs-app-nlb/workflows/Lint/badge.svg)](https://github.com/DNXLabs/terraform-aws-ecs-app-nlb/actions)
 [![LICENSE](https://img.shields.io/github/license/DNXLabs/terraform-aws-ecs-app-nlb)](https://github.com/DNXLabs/terraform-aws-ecs-app-nlb/blob/master/LICENSE)
 
-This terraform module is an AWS ECS Application Module that creates a Networking LoadBalance Application setup on ECS
+This terraform module is an AWS ECS Application Module that creates a Networking LoadBalance Application setup on ECS.
 
 This module is designed to be used with `DNXLabs/terraform-aws-ecs` (https://github.com/DNXLabs/terraform-aws-ecs).
 
-This modules creates the following resources:
+The following resources will be created:
 
  - Cloudwatch Metrics alarm - Provides a CloudWatch Metric Alarm resource.
  - IAM roles - The cloudwatch event needs an IAM Role to run the ECS task definition. A role is created and a policy will be granted via IAM policy.
