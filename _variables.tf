@@ -26,7 +26,7 @@ variable "task_role_arn" {
 
 variable "image" {
   description = "Docker image to deploy (can be a placeholder)"
-  default = "dnxsolutions/nginx-hello:latest"
+  default     = "dnxsolutions/nginx-hello:latest"
 }
 
 variable "vpc_id" {
@@ -34,7 +34,7 @@ variable "vpc_id" {
 }
 
 variable "alarm_sns_topics" {
-  default = []
+  default     = []
   description = "Alarm topics to create and alert on ECS service metrics"
 }
 variable "nlb_arn" {

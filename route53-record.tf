@@ -1,9 +1,9 @@
 data "aws_route53_zone" "selected" {
   count = "${var.hostname_create ? 1 : 0}"
-  name = var.hosted_zone
+  name  = var.hosted_zone
 }
 data "aws_lb" "nlb_selected" {
-  arn  = "${var.nlb_arn}"
+  arn = "${var.nlb_arn}"
 }
 
 resource "aws_route53_record" "hostname" {
