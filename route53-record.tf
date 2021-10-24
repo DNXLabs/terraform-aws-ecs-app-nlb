@@ -2,9 +2,6 @@ data "aws_route53_zone" "selected" {
   count = var.hostname_create ? 1 : 0
   name  = var.hosted_zone
 }
-data "aws_lb" "nlb_selected" {
-  arn = var.nlb_arn
-}
 
 resource "aws_route53_record" "hostname" {
   count = var.hostname_create ? 1 : 0
@@ -13,5 +10,5 @@ resource "aws_route53_record" "hostname" {
   name    = var.hostname
   type    = "CNAME"
   ttl     = "300"
-  records = tolist(data.aws_lb.nlb_selected.dns_name)
+  records = var.nlb_internal ? [aws_lb.default[0].dns_name] : [data.aws_lb.nlb_selected[0].dns_name]
 }
