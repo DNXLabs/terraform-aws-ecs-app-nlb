@@ -37,25 +37,38 @@ variable "alarm_sns_topics" {
   default     = []
   description = "Alarm topics to create and alert on ECS service metrics"
 }
-variable "nlb_arn" {
-  description = "Networking LoadBalance ARN"
+
+variable "alarm_prefix" {
+  type        = string
+  description = "String prefix for cloudwatch alarms. (Optional, leave blank to use iam_account_alias)"
+  default     = ""
 }
+
+variable "nlb_arn" {
+  default     = ""
+  description = "Networking LoadBalance ARN - Required if nlb=false or nlb_internal=false"
+}
+
 variable "port" {
   default     = "80"
   description = "Port for target group to listen"
 }
+
 variable "container_port" {
   default     = "8080"
   description = "Port your container listens (used in the placeholder task definition)"
 }
+
 variable "hostname_create" {
   default     = "true"
   description = "Optional parameter to create or not a Route53 record"
 }
+
 variable "hosted_zone" {
   default     = ""
   description = "Hosted Zone to create DNS record for this app"
 }
+
 variable "hostname" {
   default     = ""
   description = "Hostname to create DNS record for this app"
@@ -89,7 +102,60 @@ variable "autoscaling_scale_out_cooldown" {
   default     = 300
   description = "Cooldown in seconds to wait between scale out events"
 }
+
 variable "service_health_check_grace_period_seconds" {
   default     = 0
   description = "Time until your container starts serving requests"
+}
+
+
+variable "ordered_placement_strategy" {
+  # This variable may not be used with Fargate!
+  description = "Service level strategy rules that are taken into consideration during task placement. List from top to bottom in order of precedence. The maximum number of ordered_placement_strategy blocks is 5."
+  type = list(object({
+    field      = string
+    expression = string
+  }))
+  default = []
+}
+
+variable "placement_constraints" {
+  # This variables may not be used with Fargate!
+  description = "Rules that are taken into consideration during task placement. Maximum number of placement_constraints is 10."
+  type = list(object({
+    type       = string
+    expression = string
+  }))
+  default = []
+}
+
+variable "launch_type" {
+  default     = "EC2"
+  description = "The launch type on which to run your service. The valid values are EC2 and FARGATE. Defaults to EC2."
+}
+
+variable "fargate_spot" {
+  default     = false
+  description = "Set true to use FARGATE_SPOT capacity provider by default (only when launch_type=FARGATE)"
+}
+
+variable "subnets" {
+  default     = null
+  description = "The subnets associated with the task or service. (REQUIRED IF 'LAUCH_TYPE' IS FARGATE)"
+}
+
+variable "network_mode" {
+  default     = null
+  description = "The Docker networking mode to use for the containers in the task. The valid values are none, bridge, awsvpc, and host. (REQUIRED IF 'LAUCH_TYPE' IS FARGATE)"
+}
+
+variable "security_groups" {
+  default     = null
+  description = "The security groups associated with the task or service"
+}
+
+variable "nlb_internal" {
+  default     = false
+  type        = bool
+  description = "Creates an Internal NLB for this service"
 }
