@@ -159,3 +159,9 @@ variable "nlb_internal" {
   type        = bool
   description = "Creates an Internal NLB for this service"
 }
+
+variable "assign_public_ip" {
+  default     = false
+  type        = bool
+  description = "Configures ECS Service to assign public IP (Fargate Only)"
+}
