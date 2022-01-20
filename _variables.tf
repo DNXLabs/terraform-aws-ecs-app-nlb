@@ -165,3 +165,13 @@ variable "assign_public_ip" {
   type        = bool
   description = "Configures ECS Service to assign public IP (Fargate Only)"
 }
+
+variable "cloudwatch_logs_retention" {
+  default     = 120
+  description = "Specifies the number of days you want to retain log events in the specified log group. Possible values are: 1, 3, 5, 7, 14, 30, 60, 90, 120, 150, 180, 365, 400, 545, 731, 1827, and 3653."
+}
+
+variable "cloudwatch_logs_export" {
+  default     = false
+  description = "Whether to mark the log group to export to an S3 bucket (needs terraform-aws-log-exporter to be deployed in the account/region)"
+}
