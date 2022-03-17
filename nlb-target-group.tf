@@ -1,5 +1,5 @@
 resource "aws_lb_listener" "ecs_tcp" {
-  load_balancer_arn = var.nlb ? aws_lb.default[0].arn : var.nlb_arn
+  load_balancer_arn = var.nlb_internal ? aws_lb.default[0].arn : var.nlb_arn
   port              = var.port
   protocol          = "TCP"
 
@@ -10,7 +10,7 @@ resource "aws_lb_listener" "ecs_tcp" {
 }
 
 resource "aws_lb_target_group" "ecs_default_tcp" {
-  name        = "ecs-${var.cluster_name}-${var.name}-tcp"
+  name        = "ecs-${var.name}-tcp"
   port        = var.port
   protocol    = "TCP"
   vpc_id      = var.vpc_id
