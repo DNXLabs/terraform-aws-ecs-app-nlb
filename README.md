@@ -66,6 +66,8 @@ In addition you have the option to create or not :
 | autoscaling\_scale\_in\_cooldown | Cooldown in seconds to wait between scale in events | `number` | `300` | no |
 | autoscaling\_scale\_out\_cooldown | Cooldown in seconds to wait between scale out events | `number` | `300` | no |
 | autoscaling\_target\_cpu | Target average CPU percentage to track for autoscaling | `number` | `50` | no |
+| cloudwatch\_logs\_export | Whether to mark the log group to export to an S3 bucket (needs terraform-aws-log-exporter to be deployed in the account/region) | `bool` | `false` | no |
+| cloudwatch\_logs\_retention | Specifies the number of days you want to retain log events in the specified log group. Possible values are: 1, 3, 5, 7, 14, 30, 60, 90, 120, 150, 180, 365, 400, 545, 731, 1827, and 3653. | `number` | `120` | no |
 | cluster\_name | n/a | `string` | `"Name of existing ECS Cluster to deploy this app to"` | no |
 | container\_port | Port your container listens (used in the placeholder task definition) | `string` | `"8080"` | no |
 | cpu | Hard limit for CPU for the container | `string` | `"0"` | no |
