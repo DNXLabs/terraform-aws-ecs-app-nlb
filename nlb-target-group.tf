@@ -9,8 +9,14 @@ resource "aws_lb_listener" "ecs_tcp" {
   }
 }
 
+resource "random_string" "tg_nlb_prefix" {
+  length  = 4
+  upper   = false
+  special = false
+}
+
 resource "aws_lb_target_group" "ecs_default_tcp" {
-  name        = "ecs-${var.name}-tcp"
+  name        = format("%s-%s-tcp", substr("${var.cluster_name}-${var.name}", 0, 23), random_string.tg_nlb_prefix.result)
   port        = var.port
   protocol    = "TCP"
   vpc_id      = var.vpc_id
