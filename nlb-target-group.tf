@@ -1,5 +1,5 @@
 resource "aws_lb_listener" "ecs_tcp" {
-  load_balancer_arn = var.nlb_internal ? aws_lb.default[0].arn : var.nlb_arn
+  load_balancer_arn = var.nlb ? try(aws_lb.default[0].arn, "") : var.nlb_arn
   port              = var.port
   protocol          = "TCP"
 

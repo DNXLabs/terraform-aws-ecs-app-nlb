@@ -159,6 +159,12 @@ variable "nlb_internal" {
   description = "Creates an Internal NLB for this service"
 }
 
+variable "nlb" {
+  default     = false
+  type        = bool
+  description = "Flag to create the NLB"
+}
+
 variable "assign_public_ip" {
   default     = false
   type        = bool
