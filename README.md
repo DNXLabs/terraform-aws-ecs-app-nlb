@@ -81,7 +81,6 @@ In addition you have the option to create or not :
 | memory | Hard memory of the container | `string` | `"512"` | no |
 | name | Name of your ECS service | `any` | n/a | yes |
 | network\_mode | The Docker networking mode to use for the containers in the task. The valid values are none, bridge, awsvpc, and host. (REQUIRED IF 'LAUCH\_TYPE' IS FARGATE) | `any` | `null` | no |
-| nlb | Flag to create the NLB | `bool` | `false` | no |
 | nlb\_arn | Networking LoadBalance ARN - Required if nlb=false or nlb\_internal=false | `string` | `""` | no |
 | nlb\_internal | Creates an Internal NLB for this service | `bool` | `false` | no |
 | ordered\_placement\_strategy | Service level strategy rules that are taken into consideration during task placement. List from top to bottom in order of precedence. The maximum number of ordered\_placement\_strategy blocks is 5. | <pre>list(object({<br>    field      = string<br>    expression = string<br>  }))</pre> | `[]` | no |
