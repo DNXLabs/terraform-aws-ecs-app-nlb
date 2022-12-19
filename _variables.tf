@@ -143,6 +143,16 @@ variable "subnets" {
   description = "The subnets associated with the task or service. (REQUIRED IF 'LAUCH_TYPE' IS FARGATE)"
 }
 
+variable "nlb_subnets_ids" {
+  default     = null
+  description = "The subnets associated with the task or service. (REQUIRED IF 'LAUCH_TYPE' IS FARGATE)"
+}
+
+variable "nlb_subnets_cidr" {
+  default     = null
+  description = "The subnets associated with the task or service. (REQUIRED IF 'LAUCH_TYPE' IS FARGATE)"
+}
+
 variable "network_mode" {
   default     = null
   description = "The Docker networking mode to use for the containers in the task. The valid values are none, bridge, awsvpc, and host. (REQUIRED IF 'LAUCH_TYPE' IS FARGATE)"
@@ -179,4 +189,10 @@ variable "cloudwatch_logs_retention" {
 variable "cloudwatch_logs_export" {
   default     = false
   description = "Whether to mark the log group to export to an S3 bucket (needs terraform-aws-log-exporter to be deployed in the account/region)"
+}
+
+variable "security_group_ecs_nodes_inbound_cidrs" {
+  type        = list(string)
+  default     = ["0.0.0.0/0"]
+  description = "ECS Nodes inbound allowed CIDRs for the security group."
 }
