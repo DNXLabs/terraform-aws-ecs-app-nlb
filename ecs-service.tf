@@ -25,7 +25,7 @@ resource "aws_ecs_service" "default" {
     for_each = var.launch_type == "FARGATE" ? [var.subnets] : []
     content {
       subnets          = var.subnets
-      security_groups  = var.security_groups == "" ? null : var.security_groups
+      security_groups  = concat(var.security_groups || [], aws_security_group.ecs_service.id || [])
       assign_public_ip = var.assign_public_ip
     }
   }
