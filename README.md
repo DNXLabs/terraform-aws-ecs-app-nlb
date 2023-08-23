@@ -89,8 +89,8 @@ In addition you have the option to create or not :
 | ordered\_placement\_strategy | Service level strategy rules that are taken into consideration during task placement. List from top to bottom in order of precedence. The maximum number of ordered\_placement\_strategy blocks is 5. | <pre>list(object({<br>    field      = string<br>    expression = string<br>  }))</pre> | `[]` | no |
 | placement\_constraints | Rules that are taken into consideration during task placement. Maximum number of placement\_constraints is 10. | <pre>list(object({<br>    type       = string<br>    expression = string<br>  }))</pre> | `[]` | no |
 | port | Port for target group to listen | `string` | `"80"` | no |
-| security\_group\_ecs\_nodes\_inbound\_cidrs | ECS Nodes inbound allowed CIDRs for the security group. | `list(string)` | <pre>[<br>  "0.0.0.0/0"<br>]</pre> | no |
-| security\_groups | The security groups associated with the task or service | `any` | `null` | no |
+| security\_group\_inbound\_cidrs | ECS Nodes inbound allowed CIDRs for the security group. | `list(string)` | <pre>[<br>  "0.0.0.0/0"<br>]</pre> | no |
+| security\_groups | The security groups associated with the task or service | `list` | `[]` | no |
 | service\_health\_check\_grace\_period\_seconds | Time until your container starts serving requests | `number` | `0` | no |
 | service\_role\_arn | Existing service role ARN created by ECS cluster module | `any` | n/a | yes |
 | subnets | The subnets associated with the task or service. (REQUIRED IF 'LAUCH\_TYPE' IS FARGATE) | `any` | `null` | no |

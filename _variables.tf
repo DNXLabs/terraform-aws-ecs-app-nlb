@@ -159,7 +159,8 @@ variable "network_mode" {
 }
 
 variable "security_groups" {
-  default     = null
+  default     = []
+  type        = list
   description = "The security groups associated with the task or service"
 }
 
@@ -191,7 +192,7 @@ variable "cloudwatch_logs_export" {
   description = "Whether to mark the log group to export to an S3 bucket (needs terraform-aws-log-exporter to be deployed in the account/region)"
 }
 
-variable "security_group_ecs_nodes_inbound_cidrs" {
+variable "security_group_inbound_cidrs" {
   type        = list(string)
   default     = ["0.0.0.0/0"]
   description = "ECS Nodes inbound allowed CIDRs for the security group."
