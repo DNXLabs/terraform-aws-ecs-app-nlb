@@ -7,10 +7,13 @@ resource "aws_ecs_service" "default" {
   health_check_grace_period_seconds = var.service_health_check_grace_period_seconds
   enable_execute_command            = true
 
-  load_balancer {
-    target_group_arn = aws_lb_target_group.ecs_default_tcp.arn
-    container_name   = var.name
-    container_port   = var.container_port
+  dynamic load_balancer {
+    for_each = {for port in var.ports : port.port => port}
+    content {
+      target_group_arn = aws_lb_target_group.ecs_default_tcp[load_balancer.value.port].arn
+      container_name   = var.name
+      container_port   =  load_balancer.value.port
+    }
   }
 
   dynamic "placement_constraints" {
@@ -45,6 +48,6 @@ resource "aws_ecs_service" "default" {
   }
 
   lifecycle {
-    ignore_changes = [load_balancer, task_definition, desired_count]
+    ignore_changes = [load_balancer, task_definition, desired_count, capacity_provider_strategy]
   }
 }
