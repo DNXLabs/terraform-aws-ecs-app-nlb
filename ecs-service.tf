@@ -7,10 +7,13 @@ resource "aws_ecs_service" "default" {
   health_check_grace_period_seconds = var.service_health_check_grace_period_seconds
   enable_execute_command            = true
 
-  load_balancer {
-    target_group_arn = aws_lb_target_group.ecs_default_tcp.arn
-    container_name   = var.name
-    container_port   = var.container_port
+  dynamic "load_balancer" {
+    for_each = { for port in var.ports : port.port => port }
+    content {
+      target_group_arn = aws_lb_target_group.ecs_default_tcp[load_balancer.value.port].arn
+      container_name   = var.name
+      container_port   = load_balancer.value.port
+    }
   }
 
   dynamic "placement_constraints" {
@@ -65,11 +68,12 @@ resource "aws_security_group" "ecs_service" {
 
 
 resource "aws_security_group_rule" "ecs_service_from_nlb" {
-  count                    = var.nlb ? 1 : 0
+  # for_each                 = var.nlb == true ? { for port in var.ports : port.port => port } : []
+  for_each                 = { for port in(var.nlb == true ? var.ports : []) : port.port => port }
   type                     = "ingress"
-  from_port                = var.port
-  to_port                  = var.port
-  protocol                 = "tcp"
+  from_port                = each.value.port
+  to_port                  = each.value.port
+  protocol                 = each.value.protocol
   security_group_id        = aws_security_group.ecs_service.id
   source_security_group_id = aws_security_group.nlb[0].id
 }

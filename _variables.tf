@@ -54,6 +54,20 @@ variable "port" {
   description = "Port for target group to listen"
 }
 
+variable "ports" {
+  default = [
+    {
+      port     = 80
+      protocol = "tcp"
+    }
+  ]
+  description = "Port for target group to listen"
+  type = list(object({
+    port     = number
+    protocol = string
+  }))
+}
+
 variable "container_port" {
   default     = "8080"
   description = "Port your container listens (used in the placeholder task definition)"
@@ -129,7 +143,7 @@ variable "placement_constraints" {
 }
 
 variable "launch_type" {
-  default     = "EC2"
+  default     = "FARGATE"
   description = "The launch type on which to run your service. The valid values are EC2 and FARGATE. Defaults to EC2."
 }
 
@@ -201,4 +215,51 @@ variable "security_group_nlb_inbound_cidrs" {
   type        = list(string)
   default     = ["0.0.0.0/0"]
   description = "NLB inbound allowed CIDRs for the security group."
+}
+
+variable "create_iam_codedeployrole" {
+  type        = bool
+  default     = true
+  description = "Create Codedeploy IAM Role for ECS or not."
+}
+
+variable "codedeploy_role_arn" {
+  default     = null
+  description = "Existing IAM CodeDeploy role ARN created by ECS cluster module"
+}
+
+variable "efs_mapping" {
+  type        = map(string)
+  description = "A map of efs volume ids and paths to mount into the default task definition"
+  default     = {}
+}
+
+variable "ulimits" {
+  type = list(object({
+    name      = string
+    hardLimit = number
+    softLimit = number
+  }))
+  description = "Container ulimit settings. This is a list of maps, where each map should contain \"name\", \"hardLimit\" and \"softLimit\""
+  default     = null
+}
+
+variable "deployment_controller" {
+  default     = "CODE_DEPLOY"
+  description = "Type of deployment controller. Valid values: CODE_DEPLOY, ECS, EXTERNAL."
+}
+
+variable "codedeploy_wait_time_for_cutover" {
+  default     = 0
+  description = "Time in minutes to route the traffic to the new application deployment"
+}
+
+variable "codedeploy_wait_time_for_termination" {
+  default     = 0
+  description = "Time in minutes to terminate the new deployment"
+}
+
+variable "codedeploy_deployment_config_name" {
+  default     = "CodeDeployDefault.ECSAllAtOnce"
+  description = "Specifies the deployment configuration for CodeDeploy"
 }
