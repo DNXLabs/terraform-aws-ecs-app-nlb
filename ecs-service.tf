@@ -7,13 +7,10 @@ resource "aws_ecs_service" "default" {
   health_check_grace_period_seconds = var.service_health_check_grace_period_seconds
   enable_execute_command            = true
 
-  dynamic load_balancer {
-    for_each = {for port in var.ports : port.port => port}
-    content {
-      target_group_arn = aws_lb_target_group.ecs_default_tcp[load_balancer.value.port].arn
-      container_name   = var.name
-      container_port   =  load_balancer.value.port
-    }
+  load_balancer {
+    target_group_arn = aws_lb_target_group.ecs_default_tcp.arn
+    container_name   = var.name
+    container_port   = var.container_port
   }
 
   dynamic "placement_constraints" {
@@ -28,7 +25,7 @@ resource "aws_ecs_service" "default" {
     for_each = var.launch_type == "FARGATE" ? [var.subnets] : []
     content {
       subnets          = var.subnets
-      security_groups  = var.security_groups == "" ? null : var.security_groups
+      security_groups  = toset(concat([aws_security_group.ecs_service.id], var.security_groups))
       assign_public_ip = var.assign_public_ip
     }
   }
@@ -48,6 +45,31 @@ resource "aws_ecs_service" "default" {
   }
 
   lifecycle {
-    ignore_changes = [load_balancer, task_definition, desired_count, capacity_provider_strategy]
+    ignore_changes = [load_balancer, task_definition, desired_count]
   }
+}
+
+resource "aws_security_group" "ecs_service" {
+  name_prefix = var.name
+
+  description = "SG for ecs service app ${var.name}"
+  vpc_id      = var.vpc_id
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+
+resource "aws_security_group_rule" "ecs_service_from_nlb" {
+  count                    = var.nlb ? 1 : 0
+  type                     = "ingress"
+  from_port                = var.port
+  to_port                  = var.port
+  protocol                 = "tcp"
+  security_group_id        = aws_security_group.ecs_service.id
+  source_security_group_id = aws_security_group.nlb[0].id
 }
