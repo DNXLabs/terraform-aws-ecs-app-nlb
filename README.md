@@ -79,6 +79,7 @@ In addition you have the option to create or not :
 | create\_iam\_codedeployrole | Create Codedeploy IAM Role for ECS or not. | `bool` | `true` | no |
 | deployment\_controller | Type of deployment controller. Valid values: CODE\_DEPLOY, ECS, EXTERNAL. | `string` | `"CODE_DEPLOY"` | no |
 | efs\_mapping | A map of efs volume ids and paths to mount into the default task definition | `map(string)` | `{}` | no |
+| enable\_schedule | Enable scheduling for ECS service | `bool` | `false` | no |
 | fargate\_spot | Set true to use FARGATE\_SPOT capacity provider by default (only when launch\_type=FARGATE) | `bool` | `false` | no |
 | hosted\_zone | Hosted Zone to create DNS record for this app | `string` | `""` | no |
 | hostname | Hostname to create DNS record for this app | `string` | `""` | no |
@@ -97,6 +98,9 @@ In addition you have the option to create or not :
 | placement\_constraints | Rules that are taken into consideration during task placement. Maximum number of placement\_constraints is 10. | <pre>list(object({<br>    type       = string<br>    expression = string<br>  }))</pre> | `[]` | no |
 | port | Port for target group to listen | `string` | `"80"` | no |
 | ports | Port for target group to listen | <pre>list(object({<br>    port     = number<br>    protocol = string<br>  }))</pre> | <pre>[<br>  {<br>    "port": 80,<br>    "protocol": "tcp"<br>  }<br>]</pre> | no |
+| schedule\_cron\_start | Cron expression to start the ECS service | `string` | `""` | no |
+| schedule\_cron\_stop | Cron expression to stop the ECS service | `string` | `""` | no |
+| schedule\_timezone | Timezone for the scheduled actions | `string` | `"UTC"` | no |
 | security\_group\_ecs\_nodes\_inbound\_cidrs | ECS Nodes inbound allowed CIDRs for the security group. | `list(string)` | <pre>[<br>  "0.0.0.0/0"<br>]</pre> | no |
 | security\_group\_nlb\_inbound\_cidrs | NLB inbound allowed CIDRs for the security group. | `list(string)` | <pre>[<br>  "0.0.0.0/0"<br>]</pre> | no |
 | security\_groups | The security groups associated with the task or service | `any` | `null` | no |
