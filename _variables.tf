@@ -263,3 +263,27 @@ variable "codedeploy_deployment_config_name" {
   default     = "CodeDeployDefault.ECSAllAtOnce"
   description = "Specifies the deployment configuration for CodeDeploy"
 }
+
+variable "enable_schedule" {
+  description = "Enable scheduling for ECS service"
+  type        = bool
+  default     = false
+}
+
+variable "schedule_cron_start" {
+  description = "Cron expression to start the ECS service"
+  type        = string
+  default     = ""
+}
+
+variable "schedule_cron_stop" {
+  description = "Cron expression to stop the ECS service"
+  type        = string
+  default     = ""
+}
+
+variable "schedule_timezone" {
+  description = "Timezone for the scheduled actions"
+  type        = string
+  default     = "UTC"
+}
